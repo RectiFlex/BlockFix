@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard - Rectiflex Maintenance{% endblock %}
+
+{% block content %}
+<h1 class="mb-4">Dashboard</h1>
+
+<div class="row">
+    <div class="col-md-3 mb-4">
+        <div class="card dashboard-card">
+            <div class="card-body">
+                <h5 class="card-title">Maintenance Logs</h5>
+                <p class="card-text display-4">{{ maintenance_count }}</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 mb-4">
+        <div class="card dashboard-card">
+            <div class="card-body">
+                <h5 class="card-title">Work Orders</h5>
+                <p class="card-text display-4">{{ work_order_count }}</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 mb-4">
+        <div class="card dashboard-card">
+            <div class="card-body">
+                <h5 class="card-title">Tasks</h5>
+                <p class="card-text display-4">{{ task_count }}</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 mb-4">
+        <div class="card dashboard-card">
+            <div class="card-body">
+                <h5 class="card-title">Pending Work Orders</h5>
+                <p class="card-text display-4">{{ work_order_stats.get('Pending', 0) }}</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-md-6 mb-4">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Task Status Distribution</h5>
+                <canvas id="taskChart"></canvas>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 mb-4">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Work Order Status Distribution</h5>
+                <canvas id="workOrderChart"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-md-12 mb-4">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Maintenance Logs Over Time</h5>
+                <canvas id="maintenanceChart"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/dashboard.js') }}?v=1.0.5"></script>
+{% endblock %}

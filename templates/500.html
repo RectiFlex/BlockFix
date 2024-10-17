@@ -1,0 +1,14 @@
+
+{% extends "base.html" %}
+
+{% block title %}500 Internal Server Error - Rectiflex Maintenance{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="text-center">500 - Internal Server Error</h1>
+    <p class="text-center">Oops! Something went wrong on our end. Please try again later.</p>
+    <div class="text-center mt-4">
+        <a href="{{ url_for('index') }}" class="btn btn-primary">Return to Home</a>
+    </div>
+</div>
+{% endblock %}

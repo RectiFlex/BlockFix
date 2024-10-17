@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block title %}Edit Work Order - Rectiflex Maintenance{% endblock %}
+
+{% block content %}
+<h1 class="mb-4">Edit Work Order</h1>
+
+<form method="POST">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <div class="mb-3">
+        <label for="title" class="form-label">Title</label>
+        <input type="text" class="form-control" id="title" name="title" value="{{ work_order.title }}" required>
+    </div>
+    <div class="mb-3">
+        <label for="description" class="form-label">Description</label>
+        <textarea class="form-control" id="description" name="description" rows="3" required>{{ work_order.description }}</textarea>
+    </div>
+    <div class="mb-3">
+        <label for="task" class="form-label">Task</label>
+        <textarea class="form-control" id="task" name="task" rows="3" required>{{ work_order.task }}</textarea>
+    </div>
+    <div class="mb-3">
+        <label for="status" class="form-label">Status</label>
+        <select class="form-select" id="status" name="status" required>
+            <option value="Pending" {% if work_order.status == 'Pending' %}selected{% endif %}>Pending</option>
+            <option value="In Progress" {% if work_order.status == 'In Progress' %}selected{% endif %}>In Progress</option>
+            <option value="Completed" {% if work_order.status == 'Completed' %}selected{% endif %}>Completed</option>
+        </select>
+    </div>
+    <div class="mb-3">
+        <label for="priority" class="form-label">Priority</label>
+        <select class="form-select" id="priority" name="priority" required>
+            <option value="Low" {% if work_order.priority == 'Low' %}selected{% endif %}>Low</option>
+            <option value="Normal" {% if work_order.priority == 'Normal' %}selected{% endif %}>Normal</option>
+            <option value="High" {% if work_order.priority == 'High' %}selected{% endif %}>High</option>
+            <option value="Urgent" {% if work_order.priority == 'Urgent' %}selected{% endif %}>Urgent</option>
+        </select>
+    </div>
+    <div class="mb-3">
+        <label for="due_date" class="form-label">Due Date</label>
+        <input type="date" class="form-control" id="due_date" name="due_date" value="{{ work_order.due_date.strftime('%Y-%m-%d') if work_order.due_date else '' }}" required>
+    </div>
+    <div class="mb-3">
+        <label for="assigned_to" class="form-label">Assigned To</label>
+        <select class="form-select" id="assigned_to" name="assigned_to" required>
+            {% for user in users %}
+            <option value="{{ user.id }}" {% if user.id == work_order.assigned_to %}selected{% endif %}>{{ user.username }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Update Work Order</button>
+</form>
+{% endblock %}

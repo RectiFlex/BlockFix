@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block title %}Create Work Order - Rectiflex Maintenance{% endblock %}
+
+{% block content %}
+<h1 class="mb-4">Create Work Order</h1>
+
+<form method="POST">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <div class="mb-3">
+        <label for="title" class="form-label">Title</label>
+        <input type="text" class="form-control" id="title" name="title" required>
+    </div>
+    <div class="mb-3">
+        <label for="description" class="form-label">Description</label>
+        <textarea class="form-control" id="description" name="description" rows="3" required></textarea>
+    </div>
+    <div class="mb-3">
+        <label for="task" class="form-label">Task</label>
+        <textarea class="form-control" id="task" name="task" rows="3" required></textarea>
+    </div>
+    <div class="mb-3">
+        <label for="status" class="form-label">Status</label>
+        <select class="form-select" id="status" name="status" required>
+            <option value="Pending">Pending</option>
+            <option value="In Progress">In Progress</option>
+            <option value="Completed">Completed</option>
+        </select>
+    </div>
+    <div class="mb-3">
+        <label for="priority" class="form-label">Priority</label>
+        <select class="form-select" id="priority" name="priority" required>
+            <option value="Low">Low</option>
+            <option value="Normal" selected>Normal</option>
+            <option value="High">High</option>
+            <option value="Urgent">Urgent</option>
+        </select>
+    </div>
+    <div class="mb-3">
+        <label for="due_date" class="form-label">Due Date</label>
+        <input type="date" class="form-control" id="due_date" name="due_date" required>
+    </div>
+    <div class="mb-3">
+        <label for="assigned_to" class="form-label">Assigned To</label>
+        <select class="form-select" id="assigned_to" name="assigned_to" required>
+            {% for user in users %}
+            <option value="{{ user.id }}">{{ user.username }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Create Work Order</button>
+</form>
+{% endblock %}

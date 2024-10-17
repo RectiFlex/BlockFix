@@ -1,0 +1,15 @@
+
+flask
+flask-sqlalchemy
+flask-login
+flask-migrate
+flask-socketio
+gunicorn
+eventlet
+psycopg2-binary
+flask-wtf
+reportlab
+requests
+flask-cors
+flask-limiter
+flask-session

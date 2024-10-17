@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block title %}Tasks and Assigned Work Orders - Rectiflex Maintenance{% endblock %}
+
+{% block content %}
+<h1 class="mb-4">Tasks and Assigned Work Orders</h1>
+
+<h2 class="mb-3">Tasks</h2>
+<div class="task-list">
+    {% for task in tasks %}
+    <div class="card mb-3">
+        <div class="card-body">
+            <h5 class="card-title">{{ task.title }}</h5>
+            <p class="card-text">{{ task.description }}</p>
+            <p><strong>Status:</strong> {{ task.status }}</p>
+            <p><strong>Due Date:</strong> {{ task.due_date.strftime('%Y-%m-%d') }}</p>
+            <div class="btn-group" role="group">
+                <button type="button" class="btn btn-outline-primary status-btn" data-task-id="{{ task.id }}" data-status="Pending">Pending</button>
+                <button type="button" class="btn btn-outline-warning status-btn" data-task-id="{{ task.id }}" data-status="In Progress">In Progress</button>
+                <button type="button" class="btn btn-outline-success status-btn" data-task-id="{{ task.id }}" data-status="Completed">Completed</button>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+<h2 class="mb-3 mt-5">Assigned Work Orders</h2>
+<div class="work-order-list">
+    {% for work_order in assigned_work_orders %}
+    <div class="card mb-3">
+        <div class="card-body">
+            <h5 class="card-title">{{ work_order.title }}</h5>
+            <p class="card-text">{{ work_order.description }}</p>
+            <p><strong>Status:</strong> {{ work_order.status }}</p>
+            <p><strong>Priority:</strong> {{ work_order.priority }}</p>
+            <p><strong>Due Date:</strong> {{ work_order.due_date.strftime('%Y-%m-%d') }}</p>
+            <a href="{{ url_for('view_workorder', id=work_order.id) }}" class="btn btn-primary">View Details</a>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/tasks.js') }}"></script>
+{% endblock %}

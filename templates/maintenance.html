@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block title %}Maintenance - Rectiflex Maintenance{% endblock %}
+
+{% block content %}
+<h1 class="mb-4">Maintenance Logs</h1>
+
+<div class="row">
+    <div class="col-md-6">
+        <h2>Add New Maintenance Log</h2>
+        <form id="maintenanceForm" method="POST">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <div class="mb-3">
+                <label for="date" class="form-label">Date</label>
+                <input type="date" class="form-control" id="date" name="date" required>
+            </div>
+            <div class="mb-3">
+                <label for="lot" class="form-label">Lot Number</label>
+                <input type="text" class="form-control" id="lot" name="lot" required>
+            </div>
+            <div class="mb-3">
+                <label for="details" class="form-label">Details</label>
+                <textarea class="form-control" id="details" name="details" rows="3" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+    <div class="col-md-6">
+        <h2>Recent Logs</h2>
+        <div class="maintenance-logs">
+            {% for log in logs %}
+            <div class="maintenance-log">
+                <h5>{{ log.date.strftime('%Y-%m-%d') }} - Lot {{ log.lot }}</h5>
+                <p>{{ log.details }}</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/maintenance.js') }}"></script>
+{% endblock %}
