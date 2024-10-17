@@ -1,0 +1,59 @@
+/* Custom styles to complement Bootstrap */
+.company-logo {
+    max-height: 60px;
+    max-width: 250px;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+}
+
+.dashboard-card {
+    transition: transform 0.2s;
+}
+
+.dashboard-card:hover {
+    transform: scale(1.05);
+}
+
+.task-list {
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.maintenance-log {
+    border-left: 4px solid var(--bs-primary);
+    padding-left: 15px;
+    margin-bottom: 20px;
+}
+
+.work-order {
+    border: 1px solid var(--bs-secondary);
+    border-radius: 5px;
+    padding: 15px;
+    margin-bottom: 15px;
+}
+
+.status-btn {
+    cursor: pointer;
+}
+
+/* Ensure consistent dark theme */
+[data-bs-theme=dark] {
+    --bs-body-color: #dee2e6;
+    --bs-body-bg: #212529;
+}
+
+/* Custom scrollbar for dark theme */
+::-webkit-scrollbar {
+    width: 12px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bs-dark);
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: var(--bs-secondary);
+    border-radius: 6px;
+    border: 3px solid var(--bs-dark);
+}
