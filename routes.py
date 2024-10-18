@@ -1,9 +1,8 @@
 from flask import render_template, request, redirect, url_for, flash, jsonify, send_file
 from flask_login import login_user, login_required, logout_user, current_user
-from werkzeug.security import generate_password_hash, check_password_hash
 from app import app, db, login_manager, csrf
 from models import User, MaintenanceLog, WorkOrder, Task
-from utils import generate_work_order, send_notification, generate_work_order_pdf, send_urgent_notification
+from utils import generate_work_order, generate_work_order_pdf, send_urgent_notification
 from sqlalchemy import func
 from datetime import datetime
 from flask_wtf import FlaskForm
