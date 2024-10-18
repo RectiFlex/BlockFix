@@ -1,0 +1,31 @@
+version = 1
+
+[[analyzers]]
+name = "python"
+
+  [analyzers.meta]
+  runtime_version = "3.x.x"
+
+[[analyzers]]
+name = "javascript"
+
+  [analyzers.meta]
+  plugins = [
+    "react",
+    "vue",
+    "angular",
+    "ember",
+    "angularjs",
+    "meteor"
+  ]
+  environment = [
+    "nodejs",
+    "browser",
+    "jest",
+    "mocha",
+    "jasmine",
+    "vitest",
+    "mongo",
+    "jquery",
+    "cypress"
+  ]
