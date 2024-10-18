@@ -54,15 +54,15 @@ def dashboard():
     maintenance_count = MaintenanceLog.query.filter_by(user_id=current_user.id).count()
     work_order_count = WorkOrder.query.filter_by(created_by=current_user.id).count()
     task_count = Task.query.filter_by(user_id=current_user.id).count()
-    
+
     task_stats = db.session.query(
         Task.status, func.count(Task.id)
     ).filter_by(user_id=current_user.id).group_by(Task.status).all()
-    
+
     work_order_stats = db.session.query(
         WorkOrder.status, func.count(WorkOrder.id)
     ).filter_by(created_by=current_user.id).group_by(WorkOrder.status).all()
-    
+
     return render_template('dashboard.html', 
                            maintenance_count=maintenance_count,
                            work_order_count=work_order_count,
@@ -77,7 +77,7 @@ def maintenance():
         if not csrf.validate_token(request.form.get('csrf_token')):
             flash('CSRF token missing or invalid', 'error')
             return redirect(url_for('maintenance'))
-        
+
         log = MaintenanceLog(
             date=request.form['date'],
             lot=request.form['lot'],
@@ -86,15 +86,15 @@ def maintenance():
         )
         db.session.add(log)
         db.session.commit()
-        
+
         work_order = generate_work_order(log)
-        
+
         if work_order.priority == 'Urgent':
             send_urgent_notification(work_order)
-        
+
         flash('Maintenance log added successfully')
         return redirect(url_for('maintenance'))
-    
+
     logs = MaintenanceLog.query.filter_by(user_id=current_user.id).order_by(MaintenanceLog.date.desc()).all()
     return render_template('maintenance.html', logs=logs)
 
@@ -111,7 +111,7 @@ def create_workorder():
         if not csrf.validate_token(request.form.get('csrf_token')):
             flash('CSRF token missing or invalid', 'error')
             return redirect(url_for('create_workorder'))
-        
+
         work_order = WorkOrder(
             title=request.form['title'],
             description=request.form['description'],
@@ -126,7 +126,7 @@ def create_workorder():
         db.session.commit()
         flash('Work order created successfully')
         return redirect(url_for('workorders'))
-    
+
     users = User.query.all()
     return render_template('create_workorder.html', users=users)
 
@@ -144,7 +144,7 @@ def edit_workorder(id):
         if not csrf.validate_token(request.form.get('csrf_token')):
             flash('CSRF token missing or invalid', 'error')
             return redirect(url_for('edit_workorder', id=id))
-        
+
         work_order.title = request.form['title']
         work_order.description = request.form['description']
         work_order.task = request.form['task']
@@ -155,7 +155,7 @@ def edit_workorder(id):
         db.session.commit()
         flash('Work order updated successfully')
         return redirect(url_for('view_workorder', id=work_order.id))
-    
+
     users = User.query.all()
     return render_template('edit_workorder.html', work_order=work_order, users=users)
 
@@ -165,7 +165,7 @@ def delete_workorder(id):
     if not csrf.validate_token(request.form.get('csrf_token')):
         flash('CSRF token missing or invalid', 'error')
         return redirect(url_for('workorders'))
-    
+
     work_order = WorkOrder.query.get_or_404(id)
     db.session.delete(work_order)
     db.session.commit()
@@ -216,16 +216,16 @@ def chart_data():
     task_stats = db.session.query(
         Task.status, func.count(Task.id)
     ).filter_by(user_id=current_user.id).group_by(Task.status).all()
-    
+
     maintenance_stats = db.session.query(
         func.to_char(MaintenanceLog.date, 'YYYY-MM').label('month'),
         func.count(MaintenanceLog.id)
     ).filter_by(user_id=current_user.id).group_by('month').order_by('month').limit(6).all()
-    
+
     work_order_stats = db.session.query(
         WorkOrder.status, func.count(WorkOrder.id)
     ).filter_by(created_by=current_user.id).group_by(WorkOrder.status).all()
-    
+
     return jsonify({
         'task_stats': dict(task_stats),
         'maintenance_stats': dict(maintenance_stats),
