@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', function() {
         var content = `
             <strong>${message}</strong>
             ${data ? `<br>${data.description}<br>Priority: ${data.priority}` : ''}
-            ${data && data.url ? `<br><a href="${data.url}" class="alert-link">View Work Order</a>` : ''}
+            ${data?.url ? `<br><a href="${data.url}" class="alert-link">View Work Order</a>` : ''}
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         `;
         
