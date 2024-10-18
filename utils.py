@@ -14,7 +14,7 @@ logger = logging.getLogger(__name__)
 def generate_work_order(maintenance_log):
     is_urgent = "urgent" in maintenance_log.details.lower() or "immediate attention" in maintenance_log.details.lower()
     priority = "Urgent" if is_urgent else "Normal"
-    
+
     work_order = WorkOrder(
         title=f"{'Urgent: ' if is_urgent else ''}Maintenance required for Lot {maintenance_log.lot}",
         description=f"Based on maintenance log: {maintenance_log.details}",
