@@ -33,11 +33,10 @@ def login():
             login_user(user)
             flash('Logged in successfully.', 'success')
             return redirect(url_for('dashboard'))
+        if not user:
+            flash('Username not found. Please check your username and try again.', 'error')
         else:
-            if not user:
-                flash('Username not found. Please check your username and try again.', 'error')
-            else:
-                flash('Invalid password. Please try again.', 'error')
+            flash('Invalid password. Please try again.', 'error')
         print(f"Login attempt: Username: {form.username.data}, User found: {user is not None}, Password correct: {user and user.check_password(form.password.data)}")
     return render_template('index.html', form=form)
 
@@ -184,9 +183,8 @@ def download_workorder_pdf(id):
             download_name=f"work_order_{work_order.id}.pdf",
             mimetype='application/pdf'
         )
-    else:
-        flash('You do not have permission to download this work order.', 'danger')
-        return redirect(url_for('workorders'))
+    flash('You do not have permission to download this work order.', 'danger')
+    return redirect(url_for('workorders'))
 
 @app.route('/tasks')
 @login_required
