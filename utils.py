@@ -5,8 +5,6 @@ import logging
 from io import BytesIO
 from reportlab.pdfgen import canvas
 from reportlab.lib.pagesizes import letter
-from reportlab.lib import colors
-from reportlab.platypus import Table, TableStyle
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
